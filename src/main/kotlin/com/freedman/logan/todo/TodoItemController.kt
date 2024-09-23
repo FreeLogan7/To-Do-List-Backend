@@ -17,6 +17,19 @@ class TodoItemController {
     @GetMapping("/")
     fun getAll(): List<ListItemResponse> = items
 
+    //Get a singular list item by ID
+    @GetMapping("/{id}")
+    fun getOne(
+        @PathVariable
+        id: String
+    ): ResponseEntity<Any> {
+        val selected = items.find { it.id == id }
+        if (selected == null){
+            return ResponseEntity.badRequest().body(
+                mapOf("error" to "Could not find id"))
+        }
+        return ResponseEntity.ok().body(selected)
+    }
 
     //setting up adding items
     @PostMapping("/")
