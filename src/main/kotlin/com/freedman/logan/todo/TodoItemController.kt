@@ -10,11 +10,15 @@ import java.util.*
 @RestController
 class TodoItemController {
 
+    //setting up a list of items
     private val items = mutableListOf<ListItemResponse>()
 
+    //setting up getting all the list items
     @GetMapping("/")
     fun getAll(): List<ListItemResponse> = items
 
+
+    //setting up adding items
     @PostMapping("/")
     fun addItem(
         @RequestBody item: ListItemRequest
@@ -28,6 +32,7 @@ class TodoItemController {
         return items
     }
 
+    //update specific ID with new info
     @PutMapping("/{id}")
     fun putItem(
         @PathVariable
@@ -47,6 +52,7 @@ class TodoItemController {
         return ResponseEntity.ok().body(items)
     }
 
+    //delete specific ID
     @DeleteMapping("/{id}")
     fun deleteItem(
         @PathVariable
