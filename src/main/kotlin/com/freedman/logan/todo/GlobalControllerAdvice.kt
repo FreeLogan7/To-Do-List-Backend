@@ -1,5 +1,6 @@
 package com.freedman.logan.todo
 
+import com.freedman.logan.todo.data.errors.DuplicateItemException
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ControllerAdvice
@@ -16,13 +17,13 @@ class GlobalControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException::class)
     fun handleConflict(response: HttpServletResponse, e: Exception): ErrorResponse {
-        return ErrorResponse(e::class.java,e.message, e.stackTraceToString())
+        return ErrorResponse(e::class.java, e.message, e.stackTraceToString())
     }
 
-    @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
-    @ExceptionHandler(ArithmeticException::class)
-    fun handleTeapot(e: Exception): ErrorResponse {
-        return ErrorResponse(e::class.java,"This is the teapot func", e.stackTraceToString())
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(DuplicateItemException::class)
+    fun handleDuplicateItem(e: Exception): ErrorResponse {
+        return ErrorResponse(e::class.java, e.message, e.stackTraceToString())
     }
 
 }

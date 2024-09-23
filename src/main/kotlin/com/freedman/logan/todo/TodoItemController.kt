@@ -2,6 +2,7 @@ package com.freedman.logan.todo
 
 import com.freedman.logan.todo.data.ListItemRequest
 import com.freedman.logan.todo.data.ListItemResponse
+import com.freedman.logan.todo.data.errors.DuplicateItemException
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
@@ -39,7 +40,7 @@ class TodoItemController(
         @RequestBody item: ListItemRequest
     ):  List<ListItemResponse>{
         if (duplicates.checkExists(items, item)){
-            throw IllegalArgumentException("Item already exists")
+            throw DuplicateItemException("Item already exists")
         }
         val newItem = ListItemResponse(
             id = UUID.randomUUID().toString(),
