@@ -8,7 +8,9 @@ import java.util.*
 
 
 @RestController
-class TodoItemController {
+class TodoItemController(
+    val duplicates: Duplicates
+) {
 
     //setting up a list of items
     private val items = mutableListOf<ListItemResponse>()
@@ -36,6 +38,9 @@ class TodoItemController {
     fun addItem(
         @RequestBody item: ListItemRequest
     ):  List<ListItemResponse>{
+        if (duplicates.checkExists(items, item)){
+            throw IllegalArgumentException("Item already exists")
+        }
         val newItem = ListItemResponse(
             id = UUID.randomUUID().toString(),
             title = item.title,
@@ -44,6 +49,8 @@ class TodoItemController {
         items.add(newItem)
         return items
     }
+
+
 
     //update specific ID with new info
     @PutMapping("/{id}")
