@@ -52,7 +52,6 @@ class TodoItemController(
     }
 
 
-
     //update specific ID with new info
     @PutMapping("/{id}")
     fun putItem(
@@ -75,11 +74,15 @@ class TodoItemController(
 
     //delete specific ID
     @DeleteMapping("/{id}")
-    fun deleteItem(
-        @PathVariable
-        id: String
-    ): MutableList<ListItemResponse> {
+    fun deleteItem(@PathVariable id: String): MutableList<ListItemResponse> {
         items.removeIf { it.id  == id}
         return items
+        // -> return FUNCTION userSERVICE.function(id)  --> Items will be moved out of class
     }
 }
+
+//move business logic into a service, controller -> Service -> Repository
+//Business Logic - todo SERVICE
+// SERVICE interacts with REPOSITORY class
+//REPOSITORY INTERACTS WITH THE DATABASE
+//Create Sign in page - is an example
