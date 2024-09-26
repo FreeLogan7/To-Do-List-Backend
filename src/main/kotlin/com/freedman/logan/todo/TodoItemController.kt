@@ -10,18 +10,23 @@ import java.util.*
 
 @RestController
 class TodoItemController(
-    val duplicates: Duplicates
+    val duplicates: Duplicates,
+    val items: MutableList<ListItemResponse>
 ) {
-
-    //setting up a list of items
-    private val items = mutableListOf<ListItemResponse>()
 
     //setting up getting all the list items
     @GetMapping("/")
     fun getAll(): List<ListItemResponse> = items
 
+    //Get - differing use of PathVariable, filtering by title
+    @GetMapping("/title/{title}")
+    fun random(@PathVariable title: String): Any {
+        // Filter the items based on the title
+        return items.filter { it.title == title }
+    }
+
     //Get a singular list item by ID
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     fun getOne(
         @PathVariable
         id: String

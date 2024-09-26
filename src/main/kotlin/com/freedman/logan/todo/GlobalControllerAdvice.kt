@@ -20,6 +20,7 @@ class GlobalControllerAdvice {
         return ErrorResponse(e::class.java, e.message, e.stackTraceToString())
     }
 
+    //When an error is received 'throw' -> exceptionHandler Grabs class for ErrorResponse
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(DuplicateItemException::class)
     fun handleDuplicateItem(e: Exception): ErrorResponse {
