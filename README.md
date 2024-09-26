@@ -1,5 +1,3 @@
-# To Do List
-
 ## Featuring:
 <ul>
   <li>Kotlin</li>
